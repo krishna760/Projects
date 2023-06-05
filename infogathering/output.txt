@@ -1,0 +1,59 @@
+--------------------------------
+[+] Setting whois info...
+--------------------------------
+[+] whois info found: 
+[+] Domain Name: facebook.com
+[+] Registry Domain ID: com
+[+] Registrant_country: US
+[+] Registrar: RegistrarSafe, LLC
+[+] Owner: None
+[+] Name_servers: ['a.ns.facebook.com', 'b.ns.facebook.com', 'c.ns.facebook.com', 'd.ns.facebook.com']
+[+] Abuse_contact: None
+[+] Emails: ['abusecomplaints@registrarsafe.com', 'domain@fb.com']
+[+] Tld: com
+[+] Creation_date: 1997-03-29 05:00:00
+[+] Expiration_date: 2032-03-30 04:00:00
+[+] Last_updated: 2023-04-26 19:04:19
+--------------------------------
+[+] Getting DNS info...
+--------------------------------
+[+] A record is: 157.240.198.35
+==> Name Servers: 
+[+] NS record is: a.ns.facebook.com.
+[+] NS record is: b.ns.facebook.com.
+[+] NS record is: c.ns.facebook.com.
+[+] NS record is: d.ns.facebook.com.
+==> Mail Server: 
+[+] MX record is: 10 smtpin.vvv.facebook.com.
+==> Text Record: 
+[+] Txt record is: "google-site-verification=sK6uY9x7eaMoEMfn3OILqwTFYgaNp4llmguKI-C3_iA"
+[+] Txt record is: "google-site-verification=wdH5DTJTc9AYNwVunSVFeK0hYDGUIEOGb-RReU6pJlY"
+[+] Txt record is: "v=spf1 redirect=_spf.facebook.com"
+[+] Txt record is: "zoom-domain-verification=a6c90d61-66ec-485c-9f3d-cce7036f01bb"
+[+] Txt record is: "google-site-verification=A2WZWCNQHrGV_TWwKh6KHY90tY0SHZo_RnyMJoDaG0s"
+
+--------------------------------
+[+] Setting Geolocation info...
+--------------------------------
+[+] The Country is: United States
+[+] The Country_code is: US
+[+] The City is: None
+[+] The Latitude is: 37.751
+[+] The Longitude is: -97.822
+[+] The Ipv4 is: 157.240.198.35
+
+--------------------------------
+[+] Getting Shodan info...
+--------------------------------
+[+] Results found: 1
+IP: 157.240.198.35
+Data: 
+HTTP/1.1 301 Moved Permanently
+Location: https://157.240.198.35/
+Content-Type: text/plain
+Server: proxygen-bolt
+Date: Sat, 06 May 2023 05:02:05 GMT
+Connection: keep-alive
+Content-Length: 0
+
+
