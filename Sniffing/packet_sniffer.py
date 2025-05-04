@@ -62,40 +62,39 @@
 
 from scapy.all import *
 from scapy.layers.inet import IP
-from scapy.layers.http import HTTPRequest, TCP
-from colorama import init, Fore
-
-init()
+from scapy.layers.http import HTTPRequest,TCP
+import sys
+from colorama import Fore
 
 green = Fore.GREEN
 red = Fore.RED
-blue = Fore.BLUE
 yellow = Fore.YELLOW
+blue = Fore.BLUE
 reset = Fore.RESET
 
-def capture(iface):
-    if iface:
-        sniff(prn = process_packet, iface=iface, store=False)
+def capture(interface):
+    if interface:
+        sniff(prn=packet_capture, iface=interface, store=False)
     else:
-        sniff(prn = process_packet, store=False)
+        sniff(prn=packet_capture, store=False)
 
-def process_packet(packet):
-    if packet.haslayer(TCP):
-        src_ip = packet[IP].src
-        dst_ip = packet[IP].dst
-        src_port = packet[TCP].sport
-        dst_port = packet[TCP].dport
-        print(f"{green} {src_ip} is using port {src_port} which is connect to {dst_ip} with {dst_port}{reset}")
-    
-    if packet.haslayer(HTTPRequest):
-        url = packet[HTTPRequest].Host.decode()+ packet[HTTPRequest].Path.decode()
-        method = packet[HTTPRequest].Method.decode()
-        print(f"{blue} {src_ip} is making http request to {url} with {method} method{reset}")
-        print(f"{packet[HTTPRequest].show()}{reset}")
-        if packet.haslayer(Raw):
-            print(f"{red}Useful raw data: {packet.getlayer(Raw).load.decode()}{reset}")
+def packet_capture(packet):
+    if packet.haslayer(IP) and packet.haslayer(TCP):
+        ip_layer = packet[IP]
+        tcp_layer = packet[TCP]
 
+        # Check if the packet is an HTTP request
+        if packet.haslayer(HTTPRequest):
+            http_layer = packet[HTTPRequest]
+            method = http_layer.Method.decode()
+            host = http_layer.Host.decode()
+            path = http_layer.Path.decode()
 
+            print(f"{green}[HTTP Request]{reset} {method} {host}{path}")
 
-arg = sys.argv[1]
+        # Print IP and TCP information
+        print(f"{blue}[IP]{reset} {ip_layer.src} -> {ip_layer.dst}")
+        print(f"{yellow}[TCP]{reset} {tcp_layer.sport} -> {tcp_layer.dport}")
+
+arg = sys.argv[1] 
 capture(arg)
