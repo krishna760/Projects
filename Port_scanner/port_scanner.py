@@ -1,28 +1,28 @@
 import socket
 import sys
 
-print("SIMPLE PORT SCANNER")
-usage = "Python3 port_scanner.py HOST START_PORT END_PORT"
+print("A simple port scanner")
+usage="python3 scanner.py <host> <start_port> <end_port>"
 
-if len(sys.argv) < 4 or len(sys.argv) > 4:
-    print(usage)
-    sys.exit()
+if len(sys.argv) != 4:
+    print (usage)
+    sys.exit(1)
 
-host = sys.argv[1]
-start_port = int(sys.argv[2])
-end_port = int(sys.argv[3])
-timeout = 1.0  # set timeout to 1 second
+host=sys.argv[1]
+start_port=int(sys.argv[2])
+end_port=int(sys.argv[3])
+print(f"Scanning {host} from port {start_port} to {end_port}")
 
 try:
-    if host and start_port and end_port:
-        for port in range(start_port, end_port+1):
-            soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            soc.settimeout(timeout)  # set the timeout for the socket
-            conn = soc.connect_ex((host, port))
-            if not conn:
-                 print(f"port {port} is open")
-            soc.close()  # close the socket after use
-
-except socket.error as e:
-    print(e)
-    sys.exit()
+    for port in range(start_port, end_port+1):
+        s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(1)
+        result=s.connect_ex((host, port))
+        if result==0:
+            print(f"Port {port} is open")
+        else:
+            print(f"Port {port} is closed")
+        s.close()
+except socket.error:
+    print(f"Could not connect to {host}")
+    sys.exit(1)
