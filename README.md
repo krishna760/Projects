@@ -7,6 +7,7 @@ This is a **learning lab**, not a professional toolkit. The goal is to:
 - Build a strong foundation for ethical hacking and bug hunting.
 
 ********** Project overview ********
+
  PortScanner
 This script is a Python-based multi-threaded port scanner designed to quickly scan a range of TCP ports on a given host. It resolves the target, connects using sockets,
 and attempts to grab service banners (like HTTP Server headers).
