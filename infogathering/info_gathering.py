@@ -28,7 +28,7 @@ print(print1)
 whoisresult = ''
 try:
     #Using whois library, creating instance
-    detail = whois.query(domain)
+    detail = whois.whois(domain)
     whoisresult += f"[+] whois info found: \n"
     whoisresult += f"[+] Domain Name: {detail.name}\n"
     whoisresult += f"[+] Registry Domain ID: {detail.tld}\n"
