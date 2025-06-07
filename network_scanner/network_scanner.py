@@ -46,11 +46,12 @@ from scapy.layers.l2 import ARP, Ether
 import sys
 import ipaddress
 
+# it takes local subnetmask like 192.168.1.0/24 for scanning ip ranges in LAN.
 target_network = sys.argv[1]
 
-ether = Ether(dst='ff:ff:ff:ff:ff:ff')
-arp = ARP(pdst=target_network)
-probe = ether/arp
+ether = Ether(dst='ff:ff:ff:ff:ff:ff') #broadcast MAC address → sends to every device on the local network.
+arp = ARP(pdst=target_network)# Creates an ARP request packet asking: "Who has IP address X.X.X.X?"
+probe = ether/arp# Combines the Ethernet frame and ARP request into one packet.
 
 results = srp(probe, timeout = 10, verbose=0)
 answer = results[0]
