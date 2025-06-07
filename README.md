@@ -9,9 +9,8 @@ This is a **learning lab**, not a professional toolkit. The goal is to:
 ********** Project overview ********
 
 ### PortScanner
-This script is a Python-based multi-threaded port scanner designed to quickly scan a range of TCP ports on a given host. It resolves the target, connects using sockets,
-and attempts to grab service banners (like HTTP Server headers).
-Works on python3.6 or higher
+This script is a Python-based multi-threaded port scanner designed to quickly scan a range of TCP ports on a given host. It resolves the target, connects using sockets, and attempts to grab service banners (like HTTP Server headers). Works on python3.6 or higher
+
 Usage:
 python3 fast_port_scanner.py <HOST> <START_PORT> <END_PORT> <THREADS>
 
