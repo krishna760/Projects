@@ -98,12 +98,12 @@ python3 recursive_web_crawler.py https://www.google.com <threads>
 A fast, multithreaded subdomain brute-forcer that enumerates active subdomains of a target domain using a wordlist. It highlights live subdomains in green for better visibility using colorama.
 
 Usage:
-python3 web.py google.com <threads>
+python3 subdomain_finder.py google.com <threads>
 Requires wordlists/subdomain.txt file
 
-4)
+4) Web_vulnerability_Scanner
+This Python script is a basic vulnerability scanner designed to detect SQL Injection and Cross-Site Scripting (XSS) flaws in web applications by crawling forms on given URLs and injecting common payloads.
 
-
-
-
-
+Usage:
+python3 web_vulnerability.py (http://testphp.vulnweb.com/login.php)
+Works on Content-type=application/x-www-form-urlencoded
