@@ -22,7 +22,7 @@ def brute(thread):
         q.task_done()
 q = queue.Queue()
 
-with open("wordlists/subdomain_wordlists.txt", "r") as wordlist:
+with open("wordlists/subdomain.txt", "r") as wordlist:
     for word in wordlist.read().splitlines():
         q.put(word)
 
