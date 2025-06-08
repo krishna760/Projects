@@ -1,9 +1,9 @@
 ### Cybersecurity Learning Projects ##
 
 ## What This Repo Is
-This is for educational purpose, not a professional toolkit. The goal is to:
+This is for educational purposes, not a professional toolkit. The goal is to:
 - Reinforce theoretical knowledge with real code.
-- Improve Python skills through practical challenges related to cyber security.
+- Improve Python skills through practical challenges related to cybersecurity.
 - Build a strong foundation for ethical hacking and bug hunting.
 
 ## Note:
@@ -12,7 +12,7 @@ Some packages are non-Debian-packaged Python package like scapy etc cannot be in
 sudo apt install python3.11 python3.11-venv 
 python3.11 -m venv venv
 source venv/bin/activate # activate virtual environment
-pip install -r requirements.txt so on..
+pip install -r requirements.txt and so on...
 
 ## ********** Project Overview **********
 
@@ -23,7 +23,7 @@ This script is a Python-based multi-threaded port scanner designed to quickly sc
 python3 fast_port_scanner.py <HOST> <START_PORT> <END_PORT> <THREADS>
 
 ### Sniffer
- This script is a simple packet sniffer written in Python using Scapy and Colorama for colored output. It captures HTTP requests, src IP and dst IP addresses, and TCP port info from a given network interface same like as wireshark.
+ This script is a simple packet sniffer written in Python using Scapy and Colorama for colored output. It captures HTTP requests, src IP and dst IP addresses, and TCP port info from a given network interface similar as wireshark.
  
 **Usage:**  
 python3 packet-sniffer.py <Network-interface like eth0>
@@ -31,7 +31,6 @@ python3 packet-sniffer.py <Network-interface like eth0>
 ### Multi-Threaded Hash Cracker (MD5, SHA1, SHA256)
 This is a simple brute-force hash cracker implemented in Python that uses multiple threads to crack hashed passwords using a dictionary (password.txt).
 It supports MD5, SHA1, and SHA256 hashes.
-Works on python3.6 or higher
 
 **Usage:**(require password.txt file)  
 python3 hash_cracker.py <hashed_string> <hash_type> <threads>
@@ -45,7 +44,7 @@ Multi-threaded for faster performance
 Detects successful login by matching a success message in the response
 Reads passwords from password.txt
 Spoofs User-Agent to mimic real browser
-works for Content-Type: application/json
+Supports Content-Type: application/json
 
 **Usage:**  
 python3 form_guesser.py -u <url> -d {} -m POST -s <success_message> -t <threads>      like
@@ -53,9 +52,9 @@ python3 form_guesser.py -u https://miro.com/api/v1/auth?s= -d '{"email":"<Your_e
 
 ### Info gathering
 A basic OSINT (Open Source Intelligence) info-gathering tool designed to collect and print key domain and IP-related information using multiple libraries like whois, dnspython, shodan, requests, and some standard modules.
-NOTE: Replace shodan apikey with yours
+NOTE: Replace shodan apikey with your own
 
-**Usage:**  
+**Usages:**  
 python3 info_gathering.py -d google.com -o outfile.txt
 python3 info_gathering.py -h
 
@@ -82,7 +81,7 @@ It requires password.txt file with the list of password for bruteforce.
 ## A malware(Keylogger)
 This is a multifunctional Python-based malware that logs keystrokes, provides a reverse shell for remote command execution, and achieves persistence via Windows Registry. It's designed to operate stealthily and maintain long-term access to the target system
 
-## WebApp Penesting
+## WebApp Pentesting
 1) Directory_Buster
 multithreaded Python-based directory brute-forcing tool, similar to DirBuster, used to discover hidden files and directories on a web server using a wordlist. It supports optional file extensions and handles connection errors gracefully during enumeration.
 
@@ -108,7 +107,7 @@ This Python script is a basic vulnerability scanner designed to detect SQL Injec
 
 **Usage:**  
 python3 web_vulnerability.py (http://testphp.vulnweb.com/login.php)
-Works on Content-type=application/x-www-form-urlencoded
+Supports  Content-type=application/x-www-form-urlencoded
 
 ## Automate_Recon
 For automate_recon Fork it from https://github.com/CalfCrusher/RobinHood and apply any environment-specific changes.
