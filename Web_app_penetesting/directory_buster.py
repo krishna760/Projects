@@ -4,7 +4,7 @@ from time import sleep
 host = sys.argv[1]
 threads = int(sys.argv[2])
 try:
-    ext = sys.argv[3]   
+    ext = sys.argv[3]
 except:
     ext = False
     pass
@@ -19,30 +19,35 @@ def dirbuster(thread):
     while not q.empty():
         urls = q.get()
         try:
-            response = requests.get(urls, allow_redirects=True)
+            response = requests.get(urls, allow_redirects=False)
             if response.status_code == 200:
                 print(f"[+] Directory found: {str(response.url)}")
-        except (requests.exceptions.RequestException, ConnectionResetError) as e:
-            print(f"[!] Connection error occurred: {e}")
-            # Retry the request after a delay
-            sleep(1)
-            try:
-                response = requests.get(urls, allow_redirects=True)
-                if response.status_code == 200:
-                    print(f"[+] Directory found: {urls}")
-            except (requests.exceptions.RequestException, ConnectionResetError) as e:
-                print(f"[!] Failed to retrieve directory: {urls}. Error: {e}")
+        except Exception as e:
+                print(f"[!] Error occurred: {e}")
+
         q.task_done()
 
 
 
 q = queue.Queue()
-wordlist = open("wordlists/directory_list.txt", "r")
+wordlist = open("wordlists/directory.txt", "r")
 
+extensions = []
+# Load extensions from the file if ext is provided
+if ext:
+    try:
+        with open(ext, "r") as f:
+            extensions = f.read().splitlines()
+    except FileNotFoundError:
+        print(f"[!] Extension file '{ext}' not found.")
+        exit(1)
+
+# Queue construction
 for i in wordlist.read().splitlines():
-    if ext:
-        url = host + "/" + i + ext
-        q.put(url)
+    if extensions:
+        for e in extensions:
+            url = host + "/" + i + e
+            q.put(url)
     else:
         url = host + "/" + i
         q.put(url)
