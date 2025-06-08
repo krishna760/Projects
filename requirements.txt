@@ -1,0 +1,9 @@
+requests
+pynput
+bs4
+colorama
+whois
+dnspython
+shodan
+paramiko
+scapy
