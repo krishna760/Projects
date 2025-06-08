@@ -19,13 +19,13 @@ pip install -r requirements.txt so on..
 ### PortScanner
 This script is a Python-based multi-threaded port scanner designed to quickly scan a range of TCP ports on a given host. It resolves the target, connects using sockets, and attempts to grab service banners (like HTTP Server headers).
 
-**Usage:**
+**Usage:**  
 python3 fast_port_scanner.py <HOST> <START_PORT> <END_PORT> <THREADS>
 
 ### Sniffer
  This script is a simple packet sniffer written in Python using Scapy and Colorama for colored output. It captures HTTP requests, src IP and dst IP addresses, and TCP port info from a given network interface same like as wireshark.
  
-**Usage:**
+**Usage:**  
 python3 packet-sniffer.py <Network-interface like eth0>
 
 ### Multi-Threaded Hash Cracker (MD5, SHA1, SHA256)
@@ -33,7 +33,7 @@ This is a simple brute-force hash cracker implemented in Python that uses multip
 It supports MD5, SHA1, and SHA256 hashes.
 Works on python3.6 or higher
 
-**Usage:**(require password.txt file)
+**Usage:**(require password.txt file)  
 python3 hash_cracker.py <hashed_string> <hash_type> <threads>
 like python3 hash_cracker.py  294de3557d9d00b3d2d8a1e6aab028cf md5 100
 
@@ -47,7 +47,7 @@ Reads passwords from password.txt
 Spoofs User-Agent to mimic real browser
 works for Content-Type: application/json
 
-**Usage:**
+**Usage:**  
 python3 form_guesser.py -u <url> -d {} -m POST -s <success_message> -t <threads>      like
 python3 form_guesser.py -u https://miro.com/api/v1/auth?s= -d '{"email":"<Your_email>","password":"FUZZ"}' -m POST -s "token" -t 1
 
@@ -55,27 +55,27 @@ python3 form_guesser.py -u https://miro.com/api/v1/auth?s= -d '{"email":"<Your_e
 A basic OSINT (Open Source Intelligence) info-gathering tool designed to collect and print key domain and IP-related information using multiple libraries like whois, dnspython, shodan, requests, and some standard modules.
 NOTE: Replace shodan apikey with yours
 
-**Usage:**
+**Usage:**  
 python3 info_gathering.py -d google.com -o outfile.txt
 python3 info_gathering.py -h
 
 ### ARP_SPOOFER(works only on windows)
 A basic ARP spoofing (poisoning) tool written in Python using Scapy. It performs Man-in-the-Middle (MitM) attacks on a local network by tricking two devices (usually a victim and the router) into sending their traffic through the attacker’s machine — making the attacker act as a fake bridge between them.
 
-**Usage:**
+**Usage:**  
 python3 arp_spoofer.py
 
 ## Network Scanner
 This is a network scanner that uses ARP requests to find devices in the local network and then ICMP ping to double-check which IPs are alive.
 
-**Usage:**(specially used in window)
+**Usage:**(specially used in window)  
 python3 network_scanner.py 192.168.1.0/24  
 NOTE: It usually scan ip range from  192.168.1.0 to 192.168.1.254, altogether 254 ips..
 
 ## ssh_and_ftp_bruteforcer
 This Python script is a multi-threaded brute-force tool for attempting login on SSH or FTP services using a list of passwords. It leverages paramiko for SSH and ftplib for FTP.
 
-**Usage:**
+**Usage:**    
 python3 ssh_ftp_guesser.py <host> <thread> <ssh or ftp>
 It requires password.txt file with the list of password for bruteforce.
 
@@ -86,27 +86,27 @@ This is a multifunctional Python-based malware that logs keystrokes, provides a 
 1) Directory_Buster
 multithreaded Python-based directory brute-forcing tool, similar to DirBuster, used to discover hidden files and directories on a web server using a wordlist. It supports optional file extensions and handles connection errors gracefully during enumeration.
 
-**Usage:**
+**Usage:**  
 requires wordlists/directory.txt file with list of dir name
 python3 directory_buster.py https://<domain> <threads> <extension_file(optional)>
 
 2) Recursive_Web_Crawler
 A multithreaded web crawler that recursively discovers internal links on a domain using BeautifulSoup. It saves all discovered URLs into a domain-named text file for further reconnaissance or spidering.
 
-**Usage:**
+**Usage:**  
 python3 recursive_web_crawler.py https://www.google.com <threads>
 
 3) Subdomain Finder
 A fast, multithreaded subdomain brute-forcer that enumerates active subdomains of a target domain using a wordlist. It highlights live subdomains in green for better visibility using colorama.
 
-**Usage:**
+**Usage:**  
 python3 subdomain_finder.py google.com <threads>
 Requires wordlists/subdomain.txt file
 
 4) Web_vulnerability_Scanner
 This Python script is a basic vulnerability scanner designed to detect SQL Injection and Cross-Site Scripting (XSS) flaws in web applications by crawling forms on given URLs and injecting common payloads.
 
-**Usage:**
+**Usage:**  
 python3 web_vulnerability.py (http://testphp.vulnweb.com/login.php)
 Works on Content-type=application/x-www-form-urlencoded
 
